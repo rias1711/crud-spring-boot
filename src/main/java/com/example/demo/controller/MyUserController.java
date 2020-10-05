@@ -33,13 +33,9 @@ public class MyUserController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editUser(@RequestParam("id")Long id, Model model) {
-        Optional<MyUser> user = myUserService.findUserById(id);
-        if (user != null) {
-            model.addAttribute("user", user);
-            return "edit";
-        } else {
-            return "error";
-        }
+        Optional<MyUser> userEdit = myUserService.findUserById(id);
+        userEdit.ifPresent(myUser -> model.addAttribute("user", myUser));
+        return "edit";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
